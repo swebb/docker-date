@@ -1,0 +1,4 @@
+steps:
+- key: "docker"
+  label: ":docker: Build"
+  command: docker build --tag packages.buildkite.com/steve-private-playground/date/date:latest .
