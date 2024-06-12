@@ -1,12 +1,14 @@
 steps:
-- key: "docker"
+- key: "docker-build"
   label: ":docker: Build"
   command: docker build --tag packages.buildkite.com/steve-private-playground/date/date:latest .
 
 - key: "docker-login"
   label: ":docker: Login"
   command: buildkite-agent oidc request-token --audience "https://packages.buildkite.com/steve-private-playground/date" --lifetime 300 | docker login packages.buildkite.com/steve-private-playground/date --username buildkite --password-stdin
+  depends_on: "docker-build"
 
 - key: "docker-push"
   label: ":docker: Push"
   command: docker push packages.buildkite.com/steve-private-playground/date/date:latest
+  depends_on: "docker-login"
